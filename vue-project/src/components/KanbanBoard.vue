@@ -2,13 +2,13 @@
   <v-container fluid>
     <v-row>
       <v-col cols="2" v-for="(list, index) in lists" :key="index">
-        <div v-if="!list.isEditing">
-          <h2 @dblclick="enableEditing(index)">{{ list.title }}:</h2>
-          <v-menu>
+        <div class="title-container" v-if="!list.isEditing">
+          <h4 class="title" @dblclick="enableEditing(index)">{{ list.title }}:</h4>
+          <v-menu class="menu">
             <template v-slot:activator="{ props }">
-              <v-btn class="sub-menu-btn" icon="mdi-dots-horizontal" v-bind="props"></v-btn>
+              <v-btn x-small color="transparent" elevation="0" size="25" icon="mdi-dots-horizontal" v-bind="props"></v-btn>
             </template>
-            <v-list class="sub-menu">
+            <v-list>
               <v-list-item @click="deleteList(index)">
                 <v-list-item-title>Delete</v-list-item-title>
               </v-list-item>
@@ -23,40 +23,43 @@
               </v-list-item>
             </v-list>
           </v-menu>
-          
         </div>
         <div v-else>
           <v-text-field v-model="list.title" @keyup.enter="disableEditing(index)" autofocus></v-text-field>
           <v-btn @click="disableEditing(index)">Save</v-btn>
         </div>
-        <draggable v-model="list.items" :group="{ name: 'board' }">
-        <v-card
-          v-for="(item, itemIndex) in list.items"
-          :key="itemIndex"
-          class="mb-4"
-        >
-          <v-card-title v-if="!item.isEditing" @dblclick="editItem(index, itemIndex)">{{ item.title }}</v-card-title>
-          <v-text-field v-else v-model="item.title" @keyup.esc="cancelItemEditing(index, itemIndex)" @keyup.enter="disableItemEditing(index, itemIndex)" autofocus></v-text-field>
+        <draggable v-model="list.items" :group="{ name: 'tasks' }">
+          <v-card v-if="list.items.length === 0" class="empty-list-placeholder">
+            <v-list-item></v-list-item>
+          </v-card>
+          <v-card
+            :style="{ background: 'linear-gradient(45deg, #ffc796, #de893e)'}"
+            v-for="(item, itemIndex) in list.items"
+            :key="itemIndex"
+            class="mb-4 task"
+          >
+          <div class="title-container">
+            <v-card-title v-if="!item.isEditing" @dblclick="editItem(index, itemIndex)">{{ item.title }}</v-card-title>
+            <v-text-field v-else v-model="item.title" @keyup.esc="cancelItemEditing(index, itemIndex)" @keyup.enter="disableItemEditing(index, itemIndex)" autofocus></v-text-field>
+            <v-menu class="menu">
+              <template v-slot:activator="{ props }">
+                <v-btn class="hover-btn" x-small color="transparent" elevation="0" size="25" icon="mdi-pencil" v-bind="props"></v-btn>
+              </template>
+              <v-list>
+                <v-list-item @click="editItem(index, itemIndex)">
+                  <v-list-item-title>Edit</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="deleteItem(index, itemIndex)">
+                  <v-list-item-title>Delete</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </div>
           <v-card-text v-if="!item.isEditing" @dblclick="editItem(index, itemIndex)">{{ item.description }}</v-card-text>
           <v-text-field v-else v-model="item.description" @keyup.enter="disableItemEditing(index, itemIndex)" @keyup.esc="cancelItemEditing(index, itemIndex)" autofocus>
           <v-btn @click="disableItemEditing(index, itemIndex)">Save</v-btn>
           <v-btn @click="cancelItemEditing(index, itemIndex)"><v-icon>mdi-close</v-icon></v-btn>
           </v-text-field>  
-            <v-card-actions>
-              <v-menu>
-                <template v-slot:activator="{ props }">
-                  <v-btn icon="mdi-dots-horizontal" v-bind="props"></v-btn>
-                </template>
-                <v-list>
-                  <v-list-item @click="editItem(index, itemIndex)">
-                    <v-list-item-title>Edit</v-list-item-title>
-                  </v-list-item>
-                  <v-list-item @click="deleteItem(index, itemIndex)">
-                    <v-list-item-title>Delete</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </v-card-actions>
         </v-card>
         </draggable>
         <div v-if="list.isAddingTask">
@@ -64,10 +67,16 @@
           <v-btn @click="addTask(index)">Add Card</v-btn>
           <v-btn @click="cancelAddTask(index)"><v-icon>mdi-close</v-icon></v-btn>
         </div>
-        <v-btn v-else @click="enableAddTask(index)">Add New Task</v-btn>
+        <v-btn color="transparent" class="task" v-else @click="enableAddTask(index)">
+          <v-icon>mdi-plus</v-icon>
+          Add Task
+        </v-btn>
       </v-col>
-      <div>
-        <v-btn large color="primary" @click="addList">Add New List</v-btn>
+      <div class="newTask">
+        <v-btn large color="transparent" @click="addList">
+          <v-icon>mdi-plus</v-icon>
+          Add New List
+        </v-btn>
       </div>
     </v-row>
   </v-container>

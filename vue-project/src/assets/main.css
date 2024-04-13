@@ -1,28 +1,73 @@
-/* v-list */
 .v-col {
-/* Auto layout */
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-padding: 8px;
-margin: 15px;
+  /* Auto layout */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  padding: 8px;
+  margin: 15px;
 
-position: relative;
+  position: relative;
 
-background: #FFFFFF;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-border-radius: 21px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 21px;
 
-max-height: 75vh; 
-overflow: auto;  
-flex-shrink: 0; 
+  max-height: 75vh;  
+  overflow-x: hidden;
+  background: linear-gradient(45deg, #FFDAB9, #fab579);
 }
 
 .v-row {
-  display: flex;
-  flex-direction: row; /* Align children horizontally */
-  flex-wrap: nowrap; /* Prevents the lists from wrapping onto a new line */
-  overflow-x: auto; /* Enable horizontal scrolling */
-  overflow-y: hidden; /* Disable vertical scrolling */
+  flex-wrap: nowrap; /* This prevents the columns from wrapping underneath each other */
+  overflow-x: auto; /* This allows for horizontal scrolling if the columns overflow the container */
 }
 
+.empty-placeholder {
+  height: 50px; /* Adjust as needed */
+  visibility: hidden;
+}
+
+.task {
+  margin: 5px;
+  width: 13.5vw;
+}
+
+.newTask {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: inherit;
+  width: inherit;
+
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+.menu {
+  margin-right: 5px;
+}
+
+.v-card:hover .hover-btn {
+  opacity: 1;
+}
+.hover-btn {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.empty-list-placeholder {
+  height: 100px;
+  width: 13.5vw;
+  visibility: hidden;
+}
