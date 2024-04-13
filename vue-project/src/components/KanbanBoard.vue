@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="3" v-for="(list, index) in lists" :key="index">
+      <v-col cols="2" v-for="(list, index) in lists" :key="index">
         <div v-if="!list.isEditing">
           <h2 @dblclick="enableEditing(index)">{{ list.title }}:</h2>
           <v-menu>
@@ -35,7 +35,13 @@
           :key="itemIndex"
           class="mb-4"
         >
-          <v-card-text v-if="!item.isEditing" @dblclick="editItem(index, itemIndex)">{{ item.items }}
+          <v-card-title v-if="!item.isEditing" @dblclick="editItem(index, itemIndex)">{{ item.title }}</v-card-title>
+          <v-text-field v-else v-model="item.title" @keyup.esc="cancelItemEditing(index, itemIndex)" @keyup.enter="disableItemEditing(index, itemIndex)" autofocus></v-text-field>
+          <v-card-text v-if="!item.isEditing" @dblclick="editItem(index, itemIndex)">{{ item.description }}</v-card-text>
+          <v-text-field v-else v-model="item.description" @keyup.enter="disableItemEditing(index, itemIndex)" @keyup.esc="cancelItemEditing(index, itemIndex)" autofocus>
+          <v-btn @click="disableItemEditing(index, itemIndex)">Save</v-btn>
+          <v-btn @click="cancelItemEditing(index, itemIndex)"><v-icon>mdi-close</v-icon></v-btn>
+          </v-text-field>  
             <v-card-actions>
               <v-menu>
                 <template v-slot:activator="{ props }">
@@ -51,15 +57,10 @@
                 </v-list>
               </v-menu>
             </v-card-actions>
-          </v-card-text>
-          <v-text-field v-else v-model="item.items" @keyup.enter="disableItemEditing(index, itemIndex)" @keyup.esc="cancelItemEditing(index, itemIndex)" autofocus>
-          <v-btn @click="disableItemEditing(index, itemIndex)">Save</v-btn>
-          <v-btn @click="cancelItemEditing(index, itemIndex)"><v-icon>mdi-close</v-icon></v-btn>
-          </v-text-field>
         </v-card>
         </draggable>
         <div v-if="list.isAddingTask">
-          <v-text-field v-model="list.newTaskTitle" @keyup.enter="addTask(index)" @keyup.esc="cancelAddTask(index)" autofocus></v-text-field>
+          <v-text-field v-model="list.description" @keyup.enter="addTask(index)" @keyup.esc="cancelAddTask(index)" autofocus></v-text-field>
           <v-btn @click="addTask(index)">Add Card</v-btn>
           <v-btn @click="cancelAddTask(index)"><v-icon>mdi-close</v-icon></v-btn>
         </div>
@@ -81,28 +82,29 @@ export default defineComponent({
   },
   data() {
     return {
-      lists: [{ title: 'Todo', items: [], isEditing: false, newTaskTitle: '', isAddingTask: false},
-      { title: 'In Progress', items: [], isEditing: false, newTaskTitle: '', isAddingTask: false},
-      { title: 'Done', items: [], isEditing: false, newTaskTitle: '', isAddingTask: false},
+      lists: [{ title: 'Todo', items: [{title: "New Task", description: ''}], isEditing: false, isAddingTask: false},
+      { title: 'In Progress', items: [], isEditing: false, description: '', isAddingTask: false},
+      { title: 'Done', items: [], isEditing: false, description: '', isAddingTask: false},
       // more tasks...
       ],
     }
   },
   methods: {
-    addTask(listIndex) {
-      this.lists[listIndex].items.push({ items: this.lists[listIndex].newTaskTitle });
+    addTask(listIndex, taskTitle) {
+      this.lists[listIndex].items.push({title: taskTitle, description: this.lists[listIndex].description });
       this.lists[listIndex].isAddingTask = false;
-      this.lists[listIndex].newTaskTitle = '';
+      this.lists[listIndex].description = '';
     },
     cancelAddTask(listIndex) {
       this.lists[listIndex].isAddingTask = false;
-      this.lists[listIndex].newTaskTitle = '';
+      this.lists[listIndex].description = '';
     },
     enableAddTask(listIndex) {
       this.lists[listIndex].isAddingTask = true;
     },
     editItem(listIndex, itemIndex) {
-      this.lists[listIndex].items[itemIndex].originalItems = this.lists[listIndex].items[itemIndex].items;
+      this.lists[listIndex].items[itemIndex].originalDescription = this.lists[listIndex].items[itemIndex].description;
+      this.lists[listIndex].items[itemIndex].originalTitle = this.lists[listIndex].items[itemIndex].title;
       this.lists[listIndex].items[itemIndex].isEditing = true;
     },
     deleteItem(listIndex, itemIndex) {
@@ -124,7 +126,8 @@ export default defineComponent({
       this.lists[listIndex].items[itemIndex].isEditing = false;
     },
     cancelItemEditing(listIndex, itemIndex) {
-      this.lists[listIndex].items[itemIndex].items = this.lists[listIndex].items[itemIndex].originalItems;
+      this.lists[listIndex].items[itemIndex].description = this.lists[listIndex].items[itemIndex].originalDescription;
+      this.lists[listIndex].items[itemIndex].title = this.lists[listIndex].items[itemIndex].originalTitle;
       this.lists[listIndex].items[itemIndex].isEditing = false;
     },
   },
