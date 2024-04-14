@@ -15,8 +15,8 @@
 }
 
 .v-row {
-  flex-wrap: nowrap; /* This prevents the columns from wrapping underneath each other */
-  overflow-x: auto; /* This allows for horizontal scrolling if the columns overflow the container */
+  flex-wrap: nowrap; 
+  overflow-x: auto;
 }
 
 .empty-placeholder {
