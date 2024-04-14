@@ -6,8 +6,20 @@ import { RouterLink, RouterView } from 'vue-router'
   <header>
     <nav class="app-bar">
       <div class="menu-icon">☰</div> 
-      <div class="project_title">
-        <img src="//images.squarespace-cdn.com/content/v1/644a289cd8c0b42f41a8474f/d48644be-e0bd-4a3f-97e2-f9e4e7e5466e/fysiofresh-logo-text.png?format=1500w" alt="Logo" />
+      <div class="header-title">
+        <img src="//images.squarespace-cdn.com/content/v1/644a289cd8c0b42f41a8474f/d48644be-e0bd-4a3f-97e2-f9e4e7e5466e/fysiofresh-logo-text.png?format=1500w" />
+      </div>
+      <!-- <div class="wrapper">
+        <svg>
+          <text x="50%" y="50%" dy=".35em" text-anchor="middle">
+            Trello-Clone
+          </text>
+        </svg>
+      </div>  -->
+      <div class="icons">
+        <RouterLink to="/" class="home-link"><v-icon>mdi-home</v-icon></RouterLink>
+        <div class="search-icon"><v-icon>mdi-search-web</v-icon></div>
+        <div class="settings-icon">⚙️</div>
       </div>
     </nav>
   </header>
@@ -50,11 +62,6 @@ import { RouterLink, RouterView } from 'vue-router'
     padding: 1rem;
     height: 4rem;
   }
-  .project_title img{
-    height: auto;
-    width: 5rem;
-    margin: auto;
-  }
   .page {
     background-color:peachpuff;
     overflow-y: hidden;
@@ -76,4 +83,12 @@ import { RouterLink, RouterView } from 'vue-router'
   .menu-icon {
     margin-left: 1vw;    
   }
+.header-title img{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1vw;
+  width: auto;
+  height: 3rem;
+}
 </style>
