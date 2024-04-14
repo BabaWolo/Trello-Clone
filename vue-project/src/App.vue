@@ -31,7 +31,7 @@ import { RouterLink, RouterView } from 'vue-router'
   }
   .page {
     background-color:peachpuff;
-    overflow-y: hidden;
+    overflow-y: auto;
     overflow-x: auto;
     height: calc(100vh - 4rem);
   }
