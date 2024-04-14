@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import BoardView from '../views/BoardView.vue'
+import LoginView from '../views/LoginView.vue'
+import NotFoundView from '../views/NoView.vue'
 
 
 const router = createRouter({
@@ -7,8 +9,23 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      redirect: '/home'
+    },
+    {
+      path: '/home',
       name: 'home',
-      component: BoardView    },
+      component: BoardView    
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView
+    },
+    {
+      path: '/:catchAll(.*)',
+      name: 'not-found',
+      component: NotFoundView
+    }
   ]
 })
 

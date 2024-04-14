@@ -29,6 +29,9 @@
           <v-btn @click="disableEditing(index)">Save</v-btn>
         </div>
         <draggable v-model="list.items" :group="{ name: 'tasks' }">
+          <v-card v-if="list.items.length === 0" class="task empty-placeholder">
+            <v-card-title>Empty task placeholder</v-card-title>
+          </v-card>
           <v-card
             :style="{ background: 'linear-gradient(45deg, #ffc796, #de893e)'}"
             v-for="(item, itemIndex) in list.items"
@@ -83,12 +86,12 @@
             <v-btn @click="cancelAddTask(index)"><v-icon>mdi-close</v-icon></v-btn>
           </div>
         </div>
-        <v-btn color="transparent" class="task" v-else @click="enableAddTask(index)">
+        <v-btn color="transparent" class="task newTask" v-else @click="enableAddTask(index)">
           <v-icon>mdi-plus</v-icon>
           Add Task
         </v-btn>
       </v-col>
-      <div class="newTask">
+      <div class="newList">
         <v-btn large color="transparent" @click="addList">
           <v-icon>mdi-plus</v-icon>
           Add New List

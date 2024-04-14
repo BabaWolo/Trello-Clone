@@ -9,15 +9,8 @@ import { RouterLink, RouterView } from 'vue-router'
       <div class="header-title">
         <img src="//images.squarespace-cdn.com/content/v1/644a289cd8c0b42f41a8474f/d48644be-e0bd-4a3f-97e2-f9e4e7e5466e/fysiofresh-logo-text.png?format=1500w" />
       </div>
-      <!-- <div class="wrapper">
-        <svg>
-          <text x="50%" y="50%" dy=".35em" text-anchor="middle">
-            Trello-Clone
-          </text>
-        </svg>
-      </div>  -->
       <div class="icons">
-        <RouterLink to="/" class="home-link"><v-icon>mdi-home</v-icon></RouterLink>
+        <RouterLink to="/home"><v-icon>mdi-home</v-icon></RouterLink>
         <div class="search-icon"><v-icon>mdi-search-web</v-icon></div>
         <div class="settings-icon">⚙️</div>
       </div>
@@ -30,32 +23,6 @@ import { RouterLink, RouterView } from 'vue-router'
 
 <style scoped>
   @import './assets/main.css';
- /*  @import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
-  svg {
-    font-family: "Russo One", sans-serif;
-    width: 50vw; height: 3rem;
-  }
-  svg text {
-    animation: stroke 5s infinite alternate;
-    stroke-width: 2;
-    stroke: #365FA0;
-    font-size: 50px;
-  }
-  @keyframes stroke {
-    0%   {
-      fill: rgba(72,138,204,0); stroke: rgba(54,95,160,1);
-      stroke-dashoffset: 25%; stroke-dasharray: 0 50%; stroke-width: 2;
-    }
-    70%  {fill: rgba(72,138,204,0); stroke: rgba(54,95,160,1); }
-    80%  {fill: rgba(72,138,204,0); stroke: rgba(54,95,160,1); stroke-width: 3; }
-    100% {
-      fill: rgba(72,138,204,1); stroke: rgba(54,95,160,0);
-      stroke-dashoffset: -25%; stroke-dasharray: 50% 0; stroke-width: 0;
-    }
-  }
-
-  .wrapper {background-color: #FFFFFF};
- */
   header {
     position: relative;
     background-color: #ffffff;
@@ -83,12 +50,12 @@ import { RouterLink, RouterView } from 'vue-router'
   .menu-icon {
     margin-left: 1vw;    
   }
-.header-title img{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1vw;
-  width: auto;
-  height: 3rem;
-}
+  .header-title img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1vw;
+    width: auto;
+    height: 3rem;
+  }
 </style>
