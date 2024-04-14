@@ -59,7 +59,7 @@ import { RouterLink, RouterView } from 'vue-router'
   header {
     position: relative;
     background-color: #ffffff;
-    padding: 1rem;
+    padding: 0.5rem;
     height: 4rem;
   }
   .page {

@@ -78,8 +78,10 @@
             placeholder="Description" 
             autofocus>
           </v-text-field>
-          <v-btn @click="addTask(index)">Add Card</v-btn>
-          <v-btn @click="cancelAddTask(index)"><v-icon>mdi-close</v-icon></v-btn>
+          <div class="edit-btns">
+            <v-btn @click="addTask(index)">Add Card</v-btn>
+            <v-btn @click="cancelAddTask(index)"><v-icon>mdi-close</v-icon></v-btn>
+          </div>
         </div>
         <v-btn color="transparent" class="task" v-else @click="enableAddTask(index)">
           <v-icon>mdi-plus</v-icon>
