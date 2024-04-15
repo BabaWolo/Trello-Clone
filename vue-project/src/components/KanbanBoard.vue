@@ -39,11 +39,11 @@
             class="mb-4 task"
           >
           <div class="title-container">
-            <v-card-title v-if="!item.isEditing" @dblclick="editItem(index, itemIndex)">{{ item.title }}</v-card-title>
-            <v-text-field v-else v-model="item.title" placeholder="Enter title" keyup.esc="cancelItemEditing(index, itemIndex)" @keyup.enter="disableItemEditing(index, itemIndex)" autofocus></v-text-field>
+            <v-card-title v-if="!list.isEditing" @dblclick="editItem(index, itemIndex)">{{ item.title }}</v-card-title>
+            <v-text-field v-else v-model="item.title" placeholder="Enter title"  @keyup.esc="cancelItemEditing(index, itemIndex)" @keyup.enter="disableItemEditing(index, itemIndex)" autofocus></v-text-field>
             <v-menu class="menu">
               <template v-slot:activator="{ props }">
-                <v-btn v-if="!item.isEditing" class="hover-btn" x-small color="transparent" elevation="0" size="25" icon="mdi-pencil" v-bind="props"></v-btn>
+                <v-btn v-if="!list.isEditing" class="hover-btn" x-small color="transparent" elevation="0" size="25" icon="mdi-pencil" v-bind="props"></v-btn>
               </template>
               <v-list>
                 <v-list-item @click="editItem(index, itemIndex)">
@@ -56,7 +56,7 @@
             </v-menu>
           </div>
           <div class="title-container">
-            <v-card-text v-if="!item.isEditing" @dblclick="editItem(index, itemIndex)">{{ item.description }}</v-card-text>
+            <v-card-text v-if="!list.isEditing" @dblclick="editItem(index, itemIndex)">{{ item.description }}</v-card-text>
             <v-text-field v-else v-model="item.description" placeholder="Enter description" @keyup.enter="disableItemEditing(index, itemIndex)" @keyup.esc="cancelItemEditing(index, itemIndex)" autofocus>
             </v-text-field> 
           </div> 
@@ -68,14 +68,14 @@
         </draggable>
         <div v-if="list.isAddingTask">
           <v-text-field 
-            v-model="list.newTaskTitle" 
+            v-model="newItemTitle" 
             @keyup.enter="addTask(index)" 
             @keyup.esc="cancelAddTask(index)" 
             placeholder="Title" 
             autofocus>
           </v-text-field>
           <v-text-field 
-            v-model="list.description" 
+            v-model="newItemDescription" 
             @keyup.enter="addTask(index)" 
             @keyup.esc="cancelAddTask(index)" 
             placeholder="Description" 
@@ -108,23 +108,23 @@ export default defineComponent({
   components: {
     draggable: VueDraggableNext,
   },
-  data() {
+  data(): { lists: { title: string, items: { title: string, description: string }[], isEditing: boolean, isAddingTask: boolean }[] }  {
     return {
       lists: [
       { title: 'Todo', items: [], isEditing: false, isAddingTask: false},
       { title: 'In Progress', items: [], isEditing: false, isAddingTask: false},
       { title: 'Done', items: [], isEditing: false, isAddingTask: false},
       ],
+      newItemTitle: '',
+      newItemDescription: '',
     }
   },
   methods: {
     addTask(index) {
-      this.lists[index].items.push({ 
-        title: this.lists[index].newTaskTitle, 
-        description: this.lists[index].description 
-      });
-      this.lists[index].newTaskTitle = '';
-      this.lists[index].description = '';
+      const newItem = { title: this.newItemTitle, description: this.newItemDescription };
+      this.lists[index].items.push(newItem);
+      this.newItemTitle = '';
+      this.newItemDescription = '';
       this.cancelAddTask(index);
     },
     cancelAddTask(listIndex) {
